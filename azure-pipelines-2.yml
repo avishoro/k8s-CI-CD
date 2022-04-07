@@ -4,7 +4,7 @@ trigger:
 - master
 
 pool:
-  wt-pool
+  my-pool
 
 steps:
 - task: Npm@1
