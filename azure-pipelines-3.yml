@@ -11,12 +11,12 @@ steps:
     workingDir: '$(Build.SourcesDirectory)'
  
 - task: CopyFiles@2
-  displayName: Copy Files
+  displayName: 'Stage Artifacts'
   inputs:
     SourceFolder: '$(Build.SourcesDirectory)'
     Contents: '**'
     TargetFolder: '$(build.artifactstagingdirectory)'
-  displayName: 'Stage Artifacts'
+
 
 - task: UniversalPackages@0
   displayName: Universal Publish
