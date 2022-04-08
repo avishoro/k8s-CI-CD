@@ -4,7 +4,9 @@ trigger:
 - master
 
 pool:
-  my-pool
+  name: my-pool
+  demands:
+   -agent1
 
 steps:
 - task: Npm@1
