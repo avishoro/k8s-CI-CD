@@ -6,7 +6,7 @@ trigger:
 pool:
   name: my-pool
   demands:
-   -agent1
+   -controller
 
 steps:
 - task: Npm@1
