@@ -4,9 +4,8 @@ trigger:
 - master
 
 pool:
-  name: my-pool
-  demands:
-   -controller
+  my-pool
+ 
 
 steps:
 - task: Npm@1
