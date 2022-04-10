@@ -21,6 +21,9 @@ __steps:__
 
 1. Publish it to Azure DevOps artifacts.
 
+## Continuous Deployment and Continuous Delivery
+For the CI/CD I've created a pipeline which using Ansible to deploy the artifacts to the environments.
+![image](https://user-images.githubusercontent.com/93486933/162642955-e67b186d-f1a5-43e4-bb13-a774c0403ef5.png)
 
 
 
