@@ -1,3 +1,24 @@
+
+## Week 7 Project
+
+# CI/CD with Azure DevOps
+
+__Configure CI/CD pipelines to deploy the Node Weight Tracker application for 2 environments: Staging and Production.__
+
+- __IaC with Terraform- Provisioning of two identical environments : [ansible project](https://github.com/avishoro/ansible) .__
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Node.js Weight Tracker
 
 ![Demo](docs/build-weight-tracker-app-demo.gif)
