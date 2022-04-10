@@ -51,7 +51,7 @@
         content: |
             # Host configuration
             PORT=8080
-            HOST=host
+            HOST={{host}}
             # Postgres configuration
             PGHOST={{pghost}}
             PGUSERNAME={{pg_username}}
