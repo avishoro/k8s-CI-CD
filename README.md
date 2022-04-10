@@ -38,6 +38,13 @@ The Staging deployment stage is fully automatic and is triggered when there is a
 The Production deployment stage is activated when a user with permissions approves the deployment after a successful deployment in the Staging environment.
 In addition, the artifact that are deployed on the environment are exactly the same as the files that were deployed in the previous stage.
 
+add two variables groups, one for the staging and one for the production.
+![image](https://user-images.githubusercontent.com/93486933/162643151-776999a0-a9a5-43fb-afd5-e2cbc8bd996c.png)
+example for vaiables group:
+![image](https://user-images.githubusercontent.com/93486933/162643179-ad2a4917-af78-4ac6-8894-056068e17e7a.png)
+
+match each variable group to the correct stage:
+![image](https://user-images.githubusercontent.com/93486933/162643225-7f43e854-fea4-4fbc-b73b-15067c788543.png)
 
 
 # Node.js Weight Tracker
