@@ -69,18 +69,6 @@
     tags:
          - env
 
-  - name: run initdb script
-    run_once: true
-    shell: cd /home/avishai/bootcamp-app && npm run initdb
-    register: initdb
-    tags:
-      - initdb
-
-  - debug: msg="{{ initdb.stdout }}"
-    run_once: true
-    tags:
-      - initdb
-
   - name: run app as pm2 process
     shell: cd /home/avishai/bootcamp-app &&  pm2 start npm -- run dev
     register: out
