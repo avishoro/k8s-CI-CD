@@ -5,7 +5,7 @@
 
 __Configure CI/CD pipelines to deploy the Node Weight Tracker application for 2 environments: Staging and Production.__
 
-- __IaC with Terraform- Provisioning of two identical environments : [ansible project](https://github.com/avishoro/ansible) .__
+- __IaC with Terraform- Provisioning of two identical environments, and Configuration Management with Ansible - Installing all the dependencies and deploying the application for the first time on the remote machine : [ansible project](https://github.com/avishoro/ansible) .__
 
 
 
