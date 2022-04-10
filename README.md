@@ -10,7 +10,16 @@ __Configure CI/CD pipelines to deploy the Node Weight Tracker application for 2 
 Project environment:
 ![week-6-envs](https://user-images.githubusercontent.com/90269123/138599669-1a2ac0cb-9e71-4100-a3a7-eb1d9d0c2afa.jpg)
 
+## Continuous Integration
+The YAML `azure-CI.yml` responsible for the CI pipeline.
 
+__steps:__
+
+1. Install npm in the source directory.
+
+1. Copy the files to the artifacts directory.
+
+1. Publish it to Azure DevOps artifacts.
 
 
 
