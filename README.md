@@ -28,10 +28,15 @@ For the CI/CD I've created a pipeline which using Ansible to deploy the artifact
 
 
 
+**Stages Configuration:**
+
+The Staging deployment stage is fully automatic and is triggered when there is a new artifact of Bootcamp Application.
 
 
+![image](https://user-images.githubusercontent.com/93486933/162643058-7c9fdeef-787d-414b-bad0-fe2e82a58545.png)
 
-
+The Production deployment stage is activated when a user with permissions approves the deployment after a successful deployment in the Staging environment.
+In addition, the artifact that are deployed on the environment are exactly the same as the files that were deployed in the previous stage.
 
 
 
