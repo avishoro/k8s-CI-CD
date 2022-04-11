@@ -27,3 +27,4 @@ steps:
     vstsFeedPublish: 'Weight-app-tracker/web-tracker-app'
     vstsFeedPackagePublish: 'web-tracker-artifact'
     versionOption: 'minor'
+ 
