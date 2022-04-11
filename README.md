@@ -41,7 +41,7 @@ In addition, the artifact that are deployed on the environment are exactly the s
 add two variables groups, one for the staging and one for the production.
 ![image](https://user-images.githubusercontent.com/93486933/162643151-776999a0-a9a5-43fb-afd5-e2cbc8bd996c.png)
 example for vaiables group:
-![image](https://user-images.githubusercontent.com/93486933/162643179-ad2a4917-af78-4ac6-8894-056068e17e7a.png)
+![image](https://user-images.githubusercontent.com/93486933/162667135-e8a91f59-9715-44ca-a66d-69d3adeb3e19.png)
 
 match each variable group to the correct stage:
 ![image](https://user-images.githubusercontent.com/93486933/162643225-7f43e854-fea4-4fbc-b73b-15067c788543.png)
