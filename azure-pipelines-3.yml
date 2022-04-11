@@ -28,3 +28,4 @@ steps:
     vstsFeedPackagePublish: 'web-tracker-artifact'
     versionOption: 'minor'
  
+ 
