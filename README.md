@@ -23,7 +23,7 @@ __steps:__
 
 ## Continuous Deployment and Continuous Delivery
 For the CI/CD I've created a pipeline which using Ansible to deploy the artifacts to the environments.
-![image](https://user-images.githubusercontent.com/93486933/162642955-e67b186d-f1a5-43e4-bb13-a774c0403ef5.png)
+![image](https://user-images.githubusercontent.com/93486933/162668012-2bed4535-084a-4b73-8508-7b4f44b16215.png)
 
 
 
