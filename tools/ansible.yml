@@ -43,5 +43,5 @@ steps:
 
 - script: |
     export ANSIBLE_HOST_KEY_CHECKING=False;
-    cd $(Build.SourcesDirectory)/dockerAnsible; ansible-playbook -i inventory weightTrackerPlayBook.yaml
+    cd $(Build.SourcesDirectory)/dockerAnsible; ansible-playbook -i inventory playbook.yaml
   displayName: run ansible
