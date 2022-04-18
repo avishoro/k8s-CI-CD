@@ -20,7 +20,10 @@ stages:
     steps:
     - script: docker build -t avishaihorovicz/weight-app-tracker:latest .
       displayName: Build an image
-    
+
+    - script: docker login -u $(dockerhub_username) -p $(dockerhub_password)
+      displayName: Allowing Access
+      
     - script: docker push avishaihorovicz/weight-app-tracker:latest
       condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
       displayName: Push the image to ther docker hub repository
