@@ -1,0 +1,51 @@
+---
+- hosts: all
+  become: true
+  gather_facts: no
+  vars_files:
+    - vars
+
+  tasks:
+
+    - name: connect to Azure container registry
+      shell: |
+        docker login -u {{registry_username}} -p {{registry_password}} {{registry_url}}
+    - name: test 
+      shell: echo $
+
+    - name: Pull Docker image
+      shell: docker pull {{registry_url}}/weight-tracker
+
+
+    - name: create .env file
+      shell: |
+        echo "
+        # Host configuration
+        PORT=8080
+        HOST=0.0.0.0
+        # Postgres configuration
+        PGHOST={{pghost}}
+        PGUSERNAME={{pg_username}}
+        PGDATABASE=postgres
+        PGPASSWORD={{pg_password}}
+        PGPORT=5432
+        HOST_URL=http://{{LB_ip}}:8080
+        COOKIE_ENCRYPT_PWD=superAwesomePasswordStringThatIsAtLeast32CharactersLong!
+        NODE_ENV=development
+        # Okta configuration
+        OKTA_ORG_URL={{okta_url}}
+        OKTA_CLIENT_ID={{okta_client_id}}
+        OKTA_CLIENT_SECRET={{okta_client_secret}}
+        " > ~/.env;
+    - name: run Docker image
+      shell: docker run --restart always -d -p 0.0.0.0:8080:8080/tcp {{registry_url}}/weight-tracker
+
+    - name: copy .env file to docker container
+      shell: docker cp ~/.env  $(sudo docker ps -aq):/usr/src/app/.env
+
+    - name: restart docker container
+      shell: docker restart $(sudo docker ps -aq)
+
+    - name: npm run initdb
+      shell: docker exec $(sudo docker ps -aq) npm run initdb
+      run_once: true
