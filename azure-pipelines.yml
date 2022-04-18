@@ -36,7 +36,7 @@ stages:
   - deployment: staging
     displayName: Deploy to Staging
     environment:
-      name: staging-vnet.Controller
+      name: staging.Controller
     strategy:
       runOnce:
         deploy:
