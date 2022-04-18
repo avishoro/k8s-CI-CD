@@ -6,6 +6,8 @@ trigger:
 
 pool: my-pool
 
+variables: 
+- group: docker_vars
 
 stages:
 
