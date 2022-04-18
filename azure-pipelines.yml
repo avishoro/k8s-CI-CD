@@ -1,19 +1,28 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+name: Docker pipeline
 
 trigger:
 - master
+- feature/*
 
-pool:
-  vmImage: ubuntu-latest
+pool: my-pool
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+stages:
+
+# Continuous Integration Process
+- stage: CI
+  jobs:
+  - job: BuildAndPushDocker
+    workspace: 
+      clean: all
+    steps:
+    - script: docker build -t $(registry_url)/weight-tracker:latest .
+      displayName: Build an image
+
+    - script: docker login -u $(registry_username) -p $(registry_password) $(registry_url)
+      displayName: connect to azure container registry
+    
+    - script: docker push urielofir.azurecr.io/weight-tracker:latest
+      condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
+      displayName: Push the image to ther docker hub repository
+
