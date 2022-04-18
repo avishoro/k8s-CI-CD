@@ -18,7 +18,7 @@ parameters:
 steps:
 
 - ${{ each host in parameters.hosts }}:
-  - script: cd $(Build.SourcesDirectory)/dockerAnsible ; echo ${{host}} host=\"${{host}}\" >> inventory
+  - script: cd $(Build.SourcesDirectory)/CI-CD-with-docker ; echo ${{host}} host=\"${{host}}\" >> inventory
     displayName: add inventory
 
 - script: |
