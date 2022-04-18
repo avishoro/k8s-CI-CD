@@ -36,7 +36,7 @@ stages:
   - deployment: staging
     displayName: Deploy to Staging
     environment:
-      name: weight-tracker-app-staging.Controller
+      name: staging-vnet.Controller
     strategy:
       runOnce:
         deploy:
