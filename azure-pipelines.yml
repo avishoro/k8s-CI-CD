@@ -20,9 +20,6 @@ stages:
     steps:
     - script: docker build -t avishaihorovicz/weight-app-tracker:latest .
       displayName: Build an image
-
-    - script: docker login -u $(registry_username) -p $(registry_password) avishaihorovicz
-      displayName: connect to azure container registry
     
     - script: docker push avishaihorovicz/weight-app-tracker:latest
       condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
