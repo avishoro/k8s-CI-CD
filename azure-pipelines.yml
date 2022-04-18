@@ -36,7 +36,7 @@ stages:
   - deployment: staging
     displayName: Deploy to Staging
     environment:
-      name: staging.stg-ansibleVM
+      name: weight-tracker-app-staging.Controller
     strategy:
       runOnce:
         deploy:
