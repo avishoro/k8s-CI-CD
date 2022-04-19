@@ -17,11 +17,11 @@
          update: yes
         
     - name: connect to Azure container registry
-        shell: docker login -u {{registry_username}} -p {{registry_password}} {{registry_url}}
+      shell: docker login -u {{registry_username}} -p {{registry_password}} {{registry_url}}
   
 
     - name: Pull Docker image
-        shell: docker pull {{registry_url}}/weight-app-tracker
+      shell: docker pull {{registry_url}}/weight-app-tracker
  
 
     - name: add .env file
@@ -47,10 +47,10 @@
     
 
     - name: run Docker image
-       shell: docker run --restart always -d -p 0.0.0.0:8080:8080/tcp {{registry_url}}/weight-tracker
+      shell: docker run --restart always -d -p 0.0.0.0:8080:8080/tcp {{registry_url}}/weight-tracker
 
     - name: copy .env file to docker container
-       shell: docker cp ~/.env  $(sudo docker ps -aq):/usr/src/app/.env
+      shell: docker cp ~/.env  $(sudo docker ps -aq):/usr/src/app/.env
 
     - name: restart docker container
-       shell: docker restart $(sudo docker ps -aq)
+      shell: docker restart $(sudo docker ps -aq)
