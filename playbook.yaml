@@ -1,33 +1,26 @@
-
-- hosts: all
-  become: yes
-  gather_facts: no
-  
-  vars_files:
-    - docker-vars
-  
-  tasks:
-  
-    - name: Clone a github repository
-      git:
-         repo: https://github.com/avishoro/CI-CD-with-docker.git
-         dest: /home/avishai/bootcamp-app
-         force: yes
-         clone: yes
-         update: yes
-        
-    - name: connect to Azure container registry
-      shell: docker login -u {{registry_username}} -p {{registry_password}} {{registry_url}}
-  
-
-    - name: Pull Docker image
-      shell: docker pull {{registry_url}}/weight-app-tracker
- 
-
-    - name: add .env file
-      copy:
-          dest: "/home/avishai/bootcamp-app/.env"
-          content: |
+--- 
+- 
+  become: true
+  gather_facts: false
+  hosts: all
+  tasks: 
+    - 
+      git: 
+        clone: true
+        dest: /home/avishai/bootcamp-app
+        force: true
+        repo: "https://github.com/avishoro/CI-CD-with-docker.git"
+        update: true
+      name: "Clone a github repository"
+    - 
+      name: "connect to Azure container registry"
+      shell: "docker login -u {{registry_username}} -p {{registry_password}} {{registry_url}}"
+    - 
+      name: "Pull Docker image"
+      shell: "docker pull {{registry_url}}/weight-app-tracker"
+    - 
+      copy: 
+        content: |
             # Host configuration
             PORT=8080
             HOST={{host}}
@@ -44,13 +37,16 @@
             OKTA_ORG_URL={{okta_url}}
             OKTA_CLIENT_ID={{okta_client_id}}
             OKTA_CLIENT_SECRET={{okta_client_secret}}
-    
-
-    - name: run Docker image
-      shell: docker run --restart always -d -p 0.0.0.0:8080:8080/tcp {{registry_url}}/weight-tracker
-
-    - name: copy .env file to docker container
-      shell: docker cp ~/.env  $(sudo docker ps -aq):/usr/src/app/.env
-
-    - name: restart docker container
-      shell: docker restart $(sudo docker ps -aq)
+        dest: /home/avishai/bootcamp-app/.env
+      name: "add .env file"
+    - 
+      name: "run Docker image"
+      shell: "docker run --restart always -d -p 0.0.0.0:8080:8080/tcp {{registry_url}}/weight-tracker"
+    - 
+      name: "copy .env file to docker container"
+      shell: "docker cp ~/.env  $(sudo docker ps -aq):/usr/src/app/.env"
+    - 
+      name: "restart docker container"
+      shell: "docker restart $(sudo docker ps -aq)"
+  vars_files: 
+    - docker-vars
