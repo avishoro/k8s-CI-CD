@@ -14,6 +14,7 @@ stages:
   jobs:
   - job: BuildAndPushDocker
     steps:
+    
     - task: Docker@2
       displayName: Build an image 
       inputs:
@@ -45,6 +46,11 @@ stages:
       runOnce: 
         deploy:
           steps:
+          - task: DockerInstaller@0
+            displayName: Docker Installer
+            inputs:
+                dockerVersion: 17.09.0-ce
+                releaseType: stable
           - task: CmdLine@2
             displayName: 'Stop Container'
             inputs:
