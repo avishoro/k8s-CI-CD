@@ -1,7 +1,4 @@
-  vars_files:
-    - docker-vars
-  
-  tasks:
+  steps:
   
     - name: Clone a github repository
       git:
