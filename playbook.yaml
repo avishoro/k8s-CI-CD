@@ -3,7 +3,7 @@
   gather_facts: no
 
 
-  steps:
+  tasks:
   
    - name: Clone a github repository
      git:
@@ -12,13 +12,6 @@
       force: yes
       clone: yes
       update: yes
-      
-   - name: Install docker if needed
-      shell: |
-        if ! command -v docker;  then
-          curl -fsSL https://get.docker.com -o get-docker.sh;
-          sh get-docker.sh
-        fi
         
    - name: connect to Azure container registry
      shell: |
