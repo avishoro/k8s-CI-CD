@@ -35,6 +35,8 @@ stages:
   jobs:
   - deployment: staging
     displayName: Deploy to Staging
+    environment: 
+      name: "my-pool"
     strategy:
       runOnce:
         deploy:
