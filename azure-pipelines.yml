@@ -1,60 +1,62 @@
-name: Docker pipeline
-
 trigger:
 - master
 - feature/*
 
-pool: my-pool
+pool:
+  my-pool
 
-variables: 
-- group: docker-vars
+variables:
+ - group: CI
+
 
 stages:
-
-# Continuous Integration Process
 - stage: CI
   jobs:
   - job: BuildAndPushDocker
-    workspace: 
-      clean: all
     steps:
-    - script: docker build -t $(registry_url)/weight-app-tracker:latest .
-      displayName: Build an image
+    - task: Docker@2
+      displayName: Build an image 
+      inputs:
+        command: build
+        repository: $(imageRepository)
+        containerRegistry: $(dockerRegistryServiceConnection)
+        dockerfile: $(dockerfilePath)
+        tags: $(tag)
+    - task: Docker@2
+      displayName: Push an image to azure container registry
+      condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
+      inputs:
+        command: push
+        repository: $(imageRepository)
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: $(tag)
 
-    - script: docker login -u $(registry_username) -p $(registry_password) $(registry_url)
-      displayName: Allowing Access
-      
-    - script: docker push  $(registry_url)/weight-app-tracker:latest
-      condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
-      displayName: Push the image to ther docker hub repository
-
-
-# Continuous Deployment Process for Staging Environment
-- stage: DeployToStaging
-  condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
+- stage: DeployToStage
+  variables:
+  - group: staging
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   jobs:
   - deployment: staging
-    displayName: Deploy to Staging
-    environment: 
-      name: staging.Controller
+    displayName: 'Deploy Weight Tracker App'
+    environment:
+      name: staging
+      resourceType: VirtualMachine
     strategy:
-      runOnce:
+      runOnce: 
         deploy:
           steps:
-          - template: playbook.yaml
-            parameters:
-              pghost: $(stg_pghost)
-              pg_username: $(pg_username)
-              pg_password: $(pg_password)
-              LB_ip: $(stg_LB_ip)
-              okta_url: $(okta_url)
-              okta_client_id: $(okta_client_id)
-              okta_client_secret: $(okta_client_secret)
-              ansible_username: $(ansible_username) 
-              ansible_ssh_pass: $(ansible_ssh_pass)
-              registry_username: $(registry_username)
-              registry_password: $(registry_password)
-              registry_url: $(registry_url)
-              hosts:
-              - 10.0.1.4            
-              - 10.0.1.5            
+          - task: CmdLine@2
+            displayName: 'Stop Container'
+            inputs:
+              script: 'docker rm -f $(imageRepository) || true' 
+
+          - task: Docker@2
+            inputs:
+              containerRegistry: '$(dockerRegistryServiceConnection)'
+              command: 'login'
+              
+          - task: CmdLine@2
+            displayName: 'Run Container'
+            inputs:
+              script: 'docker run -d --restart=always --name $(imageRepository) -p 8080:8080 -e HOST=$(HOST) -e PORT=$(PORT) -e PGHOST=$(PGHOST) -e PGUSERNAME=$(PGUSERNAME) -e PGDATABASE=$(PGDBNAME) -e PGPASSWORD=$(PGPASS) -e COOKIE_ENCRYPT_PWD=$(COOKIE_ENCRYPT_PWD) -e OKTA_ORG_URL=$(OKTAURL) -e OKTA_CLIENT_ID=$(OKTACLIENT) -e OKTA_CLIENT_SECRET=$(OKTASECRET) $(containerRegistry)/$(imageRepository):$(tag)'
+
