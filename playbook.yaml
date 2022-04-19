@@ -3,7 +3,7 @@
   gather_facts: no
 
 
-  tasks:
+  steps:
   
    - name: Clone a github repository
      git:
