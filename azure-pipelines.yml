@@ -60,5 +60,5 @@ stages:
           - task: CmdLine@2
             displayName: 'Run Container'
             inputs:
-              script: 'docker run -d --restart=always --name $(imageRepository) -p 8080:8080 -e HOST=$(HOST) -e PORT=$(PORT) -e PGHOST=$(PGHOST) -e PGUSERNAME=$(PGUSERNAME) -e PGDATABASE=$(PGDBNAME) -e PGPASSWORD=$(PGPASS) -e COOKIE_ENCRYPT_PWD=$(COOKIE_ENCRYPT_PWD) -e OKTA_ORG_URL=$(OKTAURL) -e OKTA_CLIENT_ID=$(OKTACLIENT) -e OKTA_CLIENT_SECRET=$(OKTASECRET) $(containerRegistry)/$(imageRepository):$(tag)'
+              script: 'docker run -d --restart=always --name $(imageRepository) -p 8080:8080 -e HOST=$(HOST) -e PORT=$(PORT) -e PGHOST=$(PGHOST) -e PGUSERNAME=$(PGUSERNAME) -e PGDATABASE=$(PGDBNAME) -e PGPASSWORD=$(PGPASS) -e COOKIE_ENCRYPT_PWD=$(COOKIE_ENCRYPT_PWD) -e OKTA_ORG_URL=$(OKTAURL) -e OKTA_CLIENT_ID=$(OKTACLIENT) -e OKTA_CLIENT_SECRET=$(OKTASECRET) $(imageRepository)'
 
