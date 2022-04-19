@@ -1,30 +1,32 @@
-- hosts: all
+---
+- name: Deployment Playbook
+  hosts: all
   become: yes
   gather_facts: no
   
   tasks:
   
-   - name: Clone a github repository
-     git:
-      repo: https://github.com/avishoro/CI-CD-with-docker.git
-      dest: /home/avishai/bootcamp-app
-      force: yes
-      clone: yes
-      update: yes
+    - name: Clone a github repository
+      git:
+        repo: https://github.com/avishoro/CI-CD-with-docker.git
+        dest: /home/avishai/bootcamp-app
+        force: yes
+        clone: yes
+        update: yes
         
-   - name: connect to Azure container registry
-      shell: |
-        docker login -u {{registry_username}} -p {{registry_password}} {{registry_url}}
+    - name: connect to Azure container registry
+        shell: |
+          docker login -u {{registry_username}} -p {{registry_password}} {{registry_url}}
   
 
-   - name: Pull Docker image
-      shell: docker pull {{registry_url}}/weight-app-tracker
+    - name: Pull Docker image
+        shell: docker pull {{registry_url}}/weight-app-tracker
  
 
-   - name: add .env file
-      copy:
-        dest: "/home/avishai/bootcamp-app/.env"
-        content: |
+    - name: add .env file
+        copy:
+          dest: "/home/avishai/bootcamp-app/.env"
+          content: |
             # Host configuration
             PORT=8080
             HOST={{host}}
@@ -43,11 +45,11 @@
             OKTA_CLIENT_SECRET={{okta_client_secret}}
     
 
-   - name: run Docker image
-      shell: docker run --restart always -d -p 0.0.0.0:8080:8080/tcp {{registry_url}}/weight-tracker
+    - name: run Docker image
+       shell: docker run --restart always -d -p 0.0.0.0:8080:8080/tcp {{registry_url}}/weight-tracker
 
-   - name: copy .env file to docker container
-      shell: docker cp ~/.env  $(sudo docker ps -aq):/usr/src/app/.env
+    - name: copy .env file to docker container
+       shell: docker cp ~/.env  $(sudo docker ps -aq):/usr/src/app/.env
 
-   - name: restart docker container
-      shell: docker restart $(sudo docker ps -aq)
+    - name: restart docker container
+       shell: docker restart $(sudo docker ps -aq)
