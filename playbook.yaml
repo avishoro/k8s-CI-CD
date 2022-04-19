@@ -1,7 +1,3 @@
-- hosts: all
-  become: yes
-  gather_facts: no
-  
   vars_files:
     - docker-vars
   
