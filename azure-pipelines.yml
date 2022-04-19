@@ -36,7 +36,7 @@ stages:
   - deployment: staging
     displayName: Deploy to Staging
     environment: 
-      name: "my-pool"
+      name: "Controller"
     strategy:
       runOnce:
         deploy:
