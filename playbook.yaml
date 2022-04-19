@@ -3,6 +3,9 @@
   become: yes
   gather_facts: no
   
+  vars_files:
+    - docker-vars
+  
   tasks:
   
   - name: Clone a github repository
