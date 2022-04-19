@@ -35,8 +35,6 @@ stages:
   jobs:
   - deployment: staging
     displayName: Deploy to Staging
-    environment:
-      name: staging.Controller
     strategy:
       runOnce:
         deploy:
