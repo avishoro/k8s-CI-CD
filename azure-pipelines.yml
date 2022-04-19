@@ -18,13 +18,13 @@ stages:
     workspace: 
       clean: all
     steps:
-    - script: docker build -t avishaihorovicz/weight-app-tracker:latest .
+    - script: docker build -t $(registry_url)/weight-app-tracker:latest .
       displayName: Build an image
 
-    - script: docker login -u $(dockerhub_username) -p $(dockerhub_password)
+    - script: docker login -u $(registry_username) -p $(registry_password) $(registry_url)
       displayName: Allowing Access
       
-    - script: docker push avishaihorovicz/weight-app-tracker:latest
+    - script: docker push  $(registry_url)/weight-app-tracker:latest
       condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
       displayName: Push the image to ther docker hub repository
 
@@ -36,12 +36,12 @@ stages:
   - deployment: staging
     displayName: Deploy to Staging
     environment: 
-      name: "Controller"
+      name: staging.Controller
     strategy:
       runOnce:
         deploy:
           steps:
-          - template: tools/ansible.yml
+          - template: playbook.yaml
             parameters:
               pghost: $(stg_pghost)
               pg_username: $(pg_username)
