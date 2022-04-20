@@ -10,41 +10,30 @@ __Configure CI/CD pipelines to deploy the Node Weight Tracker application for 2 
 Project environment:
 ![week-6-envs](https://user-images.githubusercontent.com/90269123/138599669-1a2ac0cb-9e71-4100-a3a7-eb1d9d0c2afa.jpg)
 
+create a new pipeline selected your project repository and then selected a Docker template to connect your Azure Container Registry with the pipeline.
+![image](https://user-images.githubusercontent.com/93486933/164212012-c8605f61-b932-4e7b-bca2-ce29b0d59ca2.png)
+
+use 2 environments (staging / prod) with their resources to target the deployments from the pipline.
+![image](https://user-images.githubusercontent.com/93486933/164212197-dc9a9f8b-64e6-4198-895c-da8bca3e7202.png)
 ## Continuous Integration
-The YAML `azure-CI.yml` responsible for the CI pipeline.
 
-__steps:__
+When there is any change in the feature branch the CI process builds a Docker Image.
 
-1. Install npm in the source directory.
+__Only__ when a feature branch integrated to the master branch the CI process get back into action and in addition to building a new image pushes the image to the Azure Container Registry.
 
-1. Copy the files to the artifacts directory.
-
-1. Publish it to Azure DevOps artifacts.
 
 ## Continuous Deployment and Continuous Delivery
-For the CI/CD I've created a pipeline which using Ansible to deploy the artifacts to the environments.
-![image](https://user-images.githubusercontent.com/93486933/162668012-2bed4535-084a-4b73-8508-7b4f44b16215.png)
+
+The continuous deployment and continuous delivery pipelines are similar except that the continuous delivery requires manual approval.
+
+Once a change pushed to the master branch the CD pipelines stops and deletes the old container and then starting running a new one by __pulling the latest image from the Azure Container Registry__.
+
+The `run` command is executed with the environment variables passed to it directly from the variable group in the library.
+
+example for var library:
+![image](https://user-images.githubusercontent.com/93486933/164212895-e1a57b91-3052-4359-a57c-5b8b0338251e.png)
 
 
-
-
-**Stages Configuration:**
-
-The Staging deployment stage is fully automatic and is triggered when there is a new artifact of Bootcamp Application.
-
-
-![image](https://user-images.githubusercontent.com/93486933/162643058-7c9fdeef-787d-414b-bad0-fe2e82a58545.png)
-
-The Production deployment stage is activated when a user with permissions approves the deployment after a successful deployment in the Staging environment.
-In addition, the artifact that are deployed on the environment are exactly the same as the files that were deployed in the previous stage.
-
-add two variables groups, one for the staging and one for the production.
-![image](https://user-images.githubusercontent.com/93486933/162643151-776999a0-a9a5-43fb-afd5-e2cbc8bd996c.png)
-example for vaiables group:
-![image](https://user-images.githubusercontent.com/93486933/162667135-e8a91f59-9715-44ca-a66d-69d3adeb3e19.png)
-
-match each variable group to the correct stage:
-![image](https://user-images.githubusercontent.com/93486933/162643225-7f43e854-fea4-4fbc-b73b-15067c788543.png)
 
 
 # Node.js Weight Tracker
