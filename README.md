@@ -1,11 +1,11 @@
 
-## Week 7 Project
+## Week 8 Project
 
-# CI/CD with Azure DevOps
+# CI/CD with Docker
 
 __Configure CI/CD pipelines to deploy the Node Weight Tracker application for 2 environments: Staging and Production.__
 
-- __IaC with Terraform- Provisioning of two identical environments, and Configuration Management with Ansible - Installing all the dependencies and deploying the application for the first time on the remote machine : [ansible project](https://github.com/avishoro/ansible) .__
+- __ __IaC with Terraform- Provisioning of two identical environments  : [ansible project](https://github.com/avishoro/ansible) .__
 
 Project environment:
 ![week-6-envs](https://user-images.githubusercontent.com/90269123/138599669-1a2ac0cb-9e71-4100-a3a7-eb1d9d0c2afa.jpg)
