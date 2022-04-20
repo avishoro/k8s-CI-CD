@@ -15,6 +15,9 @@ create a new pipeline selected your project repository and then selected a Docke
 
 use 2 environments (staging / prod) with their resources to target the deployments from the pipline.
 ![image](https://user-images.githubusercontent.com/93486933/164212197-dc9a9f8b-64e6-4198-895c-da8bca3e7202.png)
+
+![image](https://user-images.githubusercontent.com/93486933/164213300-59bb1c89-4d1c-465a-bd30-e4fd6b62d893.png)
+
 ## Continuous Integration
 
 When there is any change in the feature branch the CI process builds a Docker Image.
