@@ -6,8 +6,8 @@ pool:
   my-pool
 
 variables:
-  imageRepository: 'bootcampapp'
-  containerRegistry: 'weighttrackercr.azurecr.io'
+  imageRepository: 'weightapptracker'
+  containerRegistry: 'weightapptracker.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/app/Dockerfile'
   tag: '$(Build.BuildId)'
   artifactName: 'manifests'
@@ -65,7 +65,7 @@ stages:
               namespace: 'default'
               secretType: 'dockerRegistry'
               secretName: '$(imagePullSecret)'
-              dockerRegistryEndpoint: 'weightrackerACR'
+              dockerRegistryEndpoint: 'weightapptracker'
 
           - task: KubernetesManifest@0
             inputs:
