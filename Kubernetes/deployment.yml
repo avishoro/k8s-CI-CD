@@ -31,12 +31,12 @@ spec:
           - name: PGHOST
             valueFrom:
               secretKeyRef:
-                name: app-secrets
+                name: app-configmap
                 key: pghost
           - name: PGUSERNAME
             valueFrom:
               secretKeyRef:
-                name: app-secrets
+                name: secret.yml
                 key: pgusername
           - name: PGDATABASE
             valueFrom:
@@ -46,7 +46,7 @@ spec:
           - name: PGPASSWORD
             valueFrom:
               secretKeyRef:
-                name: app-secrets
+                name: secret.yml
                 key: pgpassword
           - name: PGPORT
             valueFrom:
@@ -57,7 +57,7 @@ spec:
           - name: COOKIE_ENCRYPT_PWD
             valueFrom:
               secretKeyRef:
-                name: app-secrets
+                name: secret.yml
                 key: cookie_encrypt
 
           - name: OKTA_ORG_URL
@@ -68,10 +68,10 @@ spec:
           - name: OKTA_CLIENT_ID
             valueFrom:
               secretKeyRef:
-                name: app-secrets
+                name: secret.yml
                 key: oktaclient
           - name: OKTA_CLIENT_SECRET
             valueFrom:
               secretKeyRef:
-                name: app-secrets
+                name: secret.yml
                 key: oktasecret
