@@ -27,21 +27,15 @@ stages:
         containerRegistry: 'af00db1e-cd18-44c8-b919-3851613641cc'
         dockerfile: $(dockerfilePath)
         tags: $(tag)
-    - task: DockerCompose@0
+    - task: Docker@2
+      displayName: Push an image to azure container registry
+      condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
       inputs:
-            containerregistrytype: 'Azure Container Registry'
-            azureSubscription: 'Azure Pass - Sponsorship(1)(af00db1e-cd18-44c8-b919-3851613641cc)'
-            azureContainerRegistry: '{"loginServer":"weightapptracker.azurecr.io", "id" : "/subscriptions/af00db1e-cd18-44c8-b919-3851613641cc/resourceGroups/DefaultResourceGroup-EUS/providers/Microsoft.ContainerRegistry/registries/weightapptracker"}'
-            dockerComposeFile: 'https://github.com/avishoro/k8s-CI-CD/blob/master/docker-compose.yml'
-            action: 'Build services'
-    - task: DockerCompose@0
-      inputs:
-        containerregistrytype: 'Azure Container Registry'
-        azureSubscription: 'Azure Pass - Sponsorship(1)(af00db1e-cd18-44c8-b919-3851613641cc)'
-        azureContainerRegistry: '{"loginServer":"weightapptracker.azurecr.io", "id" : "/subscriptions/af00db1e-cd18-44c8-b919-3851613641cc/resourceGroups/DefaultResourceGroup-EUS/providers/Microsoft.ContainerRegistry/registries/weightapptracker"}'
-        dockerComposeFile: 'https://github.com/avishoro/k8s-CI-CD/blob/master/docker-compose.yml'
-        action: 'Push services'
-    
+        command: push
+        repository: $(imageRepository)
+        containerRegistry: 'af00db1e-cd18-44c8-b919-3851613641cc'
+        tags: $(tag)
+        
     - task: PublishPipelineArtifact@1
       inputs:
         targetPath: '$(Pipeline.Workspace)/s/k8s'
@@ -84,4 +78,3 @@ stages:
                 $(Pipeline.Workspace)/manifests/configmap.yml
               imagePullSecrets: $(imagePullSecret)
               containers: '$(containerRegistry)/$(imageRepository):$(tag)'
-
