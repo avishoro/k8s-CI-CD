@@ -8,7 +8,7 @@ pool:
 variables:
   imageRepository: 'weightapptracker'
   containerRegistry: 'weightapptracker.azurecr.io'
-  dockerfilePath: '$(Build.SourcesDirectory)/app/Dockerfile'
+  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
   artifactName: 'manifests'
   imagePullSecret: 'superawesomebrilliantsecret-auth'
