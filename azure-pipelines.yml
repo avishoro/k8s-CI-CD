@@ -3,24 +3,28 @@ trigger:
 - feature/*
 
 pool:
-  my-pool
+  new-pool
 
 variables:
- - group: CI
-
+  imageRepository: 'bootcampapp'
+  containerRegistry: 'weighttrackercr.azurecr.io'
+  dockerfilePath: '$(Build.SourcesDirectory)/app/Dockerfile'
+  tag: '$(Build.BuildId)'
+  artifactName: 'manifests'
+  imagePullSecret: 'superawesomebrilliantsecret-auth'
 
 stages:
+
 - stage: CI
   jobs:
   - job: BuildAndPushDocker
     steps:
-    
     - task: Docker@2
       displayName: Build an image 
       inputs:
         command: build
         repository: $(imageRepository)
-        containerRegistry: $(dockerRegistryServiceConnection)
+        containerRegistry: 'weightrackerACR'
         dockerfile: $(dockerfilePath)
         tags: $(tag)
     - task: Docker@2
@@ -29,62 +33,49 @@ stages:
       inputs:
         command: push
         repository: $(imageRepository)
-        containerRegistry: $(dockerRegistryServiceConnection)
+        containerRegistry: 'weightrackerACR'
         tags: $(tag)
+        
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Pipeline.Workspace)/s/k8s'
+        artifact: '$(artifactName)'
+        publishLocation: 'pipeline'
 
-- stage: DeployToStage
-  variables:
-  - group: staging
+- stage: Deploy
+  displayName: Deploy to Production
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   jobs:
-  - deployment: staging
-    displayName: 'Deploy Weight Tracker App'
-    environment:
-      name: staging
-      resourceType: VirtualMachine
+  - deployment: Deploy
+    displayName: 'Deploy to AKS'
+    environment: 'k8s-production.default'
     strategy:
       runOnce: 
         deploy:
           steps:
-     
-          - task: CmdLine@2
-            displayName: 'Stop Container'
+          - task: DownloadPipelineArtifact@2
             inputs:
-              script: 'docker rm -f $(imageRepository) || true' 
+              buildType: 'current'
+              artifactName: '$(artifactName)'
+              targetPath: '$(Pipeline.Workspace)/manifests'
 
-          - task: Docker@2
+          - task: KubernetesManifest@0
             inputs:
-              containerRegistry: '$(dockerRegistryServiceConnection)'
-              command: 'login'
-              
-          - task: CmdLine@2
-            displayName: 'Run Container'
-            inputs:
-              script: 'docker run -d --restart=always --name $(imageRepository) -p 8080:8080 -e HOST=$(HOST) -e PORT=$(PORT) -e PGHOST=$(PGHOST) -e PGUSERNAME=$(PGUSERNAME) -e PGDATABASE=$(PGDBNAME) -e PGPASSWORD=$(PGPASS) -e COOKIE_ENCRYPT_PWD=$(COOKIE_ENCRYPT_PWD) -e OKTA_ORG_URL=$(OKTAURL) -e OKTA_CLIENT_ID=$(OKTACLIENT) -e OKTA_CLIENT_SECRET=$(OKTASECRET) $(containerRegistry)/$(imageRepository):$(tag)'
+              action: 'createSecret'
+              namespace: 'default'
+              secretType: 'dockerRegistry'
+              secretName: '$(imagePullSecret)'
+              dockerRegistryEndpoint: 'weightrackerACR'
 
-- stage: DeployToProd
-  variables:
-  - group: prod
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-  jobs:
-  - deployment: production
-    displayName: 'Deploy Weight Tracker App'
-    environment:
-      name: prod
-      resourceType: VirtualMachine
-    strategy:
-      runOnce: 
-        deploy:
-          steps:
-          - task: CmdLine@2
-            displayName: 'Stop Container'
+          - task: KubernetesManifest@0
             inputs:
-              script: 'docker rm -f $(imageRepository) || true'
-          - task: Docker@2
-            inputs:
-              containerRegistry: '$(dockerRegistryServiceConnection)'
-              command: 'login'
-          - task: CmdLine@2
-            displayName: 'Run Container'
-            inputs:
-              script: 'docker run -d --restart=always --name $(imageRepository) -p 8080:8080 -e HOST=$(HOST) -e PORT=$(PORT) -e PGHOST=$(PGHOST) -e PGUSERNAME=$(PGUSERNAME) -e PGDATABASE=$(PGDBNAME) -e PGPASSWORD=$(PGPASS) -e COOKIE_ENCRYPT_PWD=$(COOKIE_ENCRYPT_PWD) -e OKTA_ORG_URL=$(OKTAURL) -e OKTA_CLIENT_ID=$(OKTACLIENT) -e OKTA_CLIENT_SECRET=$(OKTASECRET) $(containerRegistry)/$(imageRepository):$(tag)'
+              action: 'deploy'
+              namespace: 'default'
+              manifests: |
+                $(Pipeline.Workspace)/manifests/deployment.yml
+                $(Pipeline.Workspace)/manifests/ingress.yml
+                $(Pipeline.Workspace)/manifests/service.yml
+                $(Pipeline.Workspace)/manifests/configmap.yml
+              imagePullSecrets: $(imagePullSecret)
+              containers: '$(containerRegistry)/$(imageRepository):$(tag)'
+
