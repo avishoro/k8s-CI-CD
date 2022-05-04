@@ -24,7 +24,7 @@ stages:
       inputs:
         command: build
         repository: $(imageRepository)
-        containerRegistry: 'af00db1e-cd18-44c8-b919-3851613641cc'
+        containerRegistry: 'docker-service'
         dockerfile: $(dockerfilePath)
         tags: $(tag)
     - task: Docker@2
@@ -33,7 +33,7 @@ stages:
       inputs:
         command: push
         repository: $(imageRepository)
-        containerRegistry: 'af00db1e-cd18-44c8-b919-3851613641cc'
+        containerRegistry: 'docker-service'
         tags: $(tag)
         
     - task: PublishPipelineArtifact@1
