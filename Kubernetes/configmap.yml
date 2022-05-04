@@ -7,7 +7,8 @@ metadata:
 data:
   port: '80'
   host: '0.0.0.0'
-  pgdatabase: 'weightracker'
+  pgdatabase: 'k8s-postgres'
   pgport: '5432'
-  hosturl: 'http://20.88.167.69' # External IP of ingress-nginx-controller
-  oktaurl: 'https://dev-41508641.okta.com'
+  hosturl: 'http://20.121.38.217' # External IP of ingress-nginx-controller
+  oktaurl: 'https://dev-18290583.okta.com'
+  pghost: 'k8s-postgres.postgres.database.azure.com'
