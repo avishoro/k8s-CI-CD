@@ -1,20 +1,20 @@
 apiVersion : apps/v1
 kind: Deployment
 metadata:
-  name: bootcampapp 
+  name: weightapptracker
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: bootcampapp
+      app: weightapptracker
   template:
     metadata:
       labels:
-        app: bootcampapp 
+        app: weightapptracker
     spec:
       containers:
-        - name: bootcampapp 
-          image: weighttrackercr.azurecr.io/bootcampapp
+        - name: weightapptracker
+          image: weightapptracker.azurecr.io/weightapptracker
           ports:
           - containerPort: 80
           env:
