@@ -6,7 +6,7 @@ pool:
   my-pool
 
 variables:
-  imageRepository: 'bootcamp'
+  imageRepository: 'weightapptracker'
   containerRegistry: 'weightapptracker.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
