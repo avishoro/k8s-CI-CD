@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: app-configmap
   labels:
-    app: bootcampapp
+    app: weightapptracker
 data:
   port: '80'
   host: '0.0.0.0'
