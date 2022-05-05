@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-    name: bootcampapp
+    name: weightapptracker
 spec:
     ports:
     - port: 80 
     selector:
-        app: bootcampapp
+        app: weightapptracker
