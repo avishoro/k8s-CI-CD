@@ -24,7 +24,7 @@ stages:
       inputs:
         command: build
         repository: $(imageRepository)
-        containerRegistry: 'docker-service'
+        containerRegistry: 'ACR-service'
         dockerfile: $(dockerfilePath)
         tags: $(tag)
     - task: Docker@2
@@ -33,7 +33,7 @@ stages:
       inputs:
         command: push
         repository: $(imageRepository)
-        containerRegistry: 'docker-service'
+        containerRegistry: 'ACR-service'
         tags: $(tag)
         
     - task: PublishPipelineArtifact@1
