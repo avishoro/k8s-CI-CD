@@ -11,4 +11,4 @@ data:
   pgport: '5432'
   hosturl: 'http://20.121.38.217' # External IP of ingress-nginx-controller
   oktaurl: 'https://dev-18290583.okta.com'
-  pghost: 'k8s-postgres.postgres.database.azure.com'
+  pghost: 'k8s-database.postgres.database.azure.com'
