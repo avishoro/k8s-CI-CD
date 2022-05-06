@@ -59,7 +59,13 @@ stages:
               artifactName: '$(artifactName)'
               targetPath: '$(Pipeline.Workspace)/manifests'
 
-         
+          - task: KubernetesManifest@0
+            inputs:
+              action: 'createSecret'
+              namespace: 'default'
+              secretType: 'dockerRegistry'
+              secretName: 'app-secrets'
+              dockerRegistryEndpoint: 'af00db1e-cd18-44c8-b919-3851613641cc'
 
           - task: KubernetesManifest@0
             inputs:
@@ -70,4 +76,5 @@ stages:
                 $(Pipeline.Workspace)/manifests/ingress.yml
                 $(Pipeline.Workspace)/manifests/service.yml
                 $(Pipeline.Workspace)/manifests/configmap.yml
+              imagePullSecrets: $(imagePullSecret)
               containers: '$(containerRegistry)/$(imageRepository):$(tag)'
