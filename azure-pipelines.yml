@@ -11,7 +11,7 @@ variables:
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
   artifactName: 'manifests'
-  imagePullSecret: 'superawesomebrilliantsecret-auth'
+  imagePullSecret: 'secret.yml'
 
 stages:
 
