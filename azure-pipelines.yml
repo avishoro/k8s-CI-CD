@@ -64,7 +64,7 @@ stages:
               action: 'createSecret'
               namespace: 'default'
               secretType: 'dockerRegistry'
-              secretName: '$(imagePullSecret)'
+              secretName: 'app-secrets'
               dockerRegistryEndpoint: 'ACR-service'
 
           - task: KubernetesManifest@0
