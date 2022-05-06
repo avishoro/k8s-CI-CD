@@ -21,17 +21,17 @@ spec:
           - name: HOST
             valueFrom:
               configMapKeyRef:
-                name: app-configmap
+                name: secret.yml
                 key: host
           - name: PORT
             valueFrom:
               configMapKeyRef:
-                name: app-configmap
+                name: secret.yml
                 key: port
           - name: PGHOST
             valueFrom:
               secretKeyRef:
-                name: app-configmap
+                name: secret.yml
                 key: pghost
           - name: PGUSERNAME
             valueFrom:
@@ -41,7 +41,7 @@ spec:
           - name: PGDATABASE
             valueFrom:
               configMapKeyRef:
-                name: app-configmap
+                name: secret.yml
                 key: pgdatabase
           - name: PGPASSWORD
             valueFrom:
@@ -51,7 +51,7 @@ spec:
           - name: PGPORT
             valueFrom:
               configMapKeyRef:
-                name: app-configmap
+                name: secret.yml
                 key: pgport
 
           - name: COOKIE_ENCRYPT_PWD
@@ -63,7 +63,7 @@ spec:
           - name: OKTA_ORG_URL
             valueFrom:
               configMapKeyRef:
-                name: app-configmap
+                name: secret.yml
                 key: oktaurl
           - name: OKTA_CLIENT_ID
             valueFrom:
