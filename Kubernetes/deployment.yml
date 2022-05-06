@@ -21,57 +21,57 @@ spec:
           - name: HOST
             valueFrom:
               configMapKeyRef:
-                name: secret.yml
+                name: app-configmap
                 key: host
           - name: PORT
             valueFrom:
               configMapKeyRef:
-                name: secret.yml
+                name: app-configmap
                 key: port
           - name: PGHOST
             valueFrom:
               secretKeyRef:
-                name: secret.yml
+                name: app-configmap
                 key: pghost
           - name: PGUSERNAME
             valueFrom:
               secretKeyRef:
-                name: secret.yml
+                name: app-secrets
                 key: pgusername
           - name: PGDATABASE
             valueFrom:
               configMapKeyRef:
-                name: secret.yml
+                name: app-configmap
                 key: pgdatabase
           - name: PGPASSWORD
             valueFrom:
               secretKeyRef:
-                name: secret.yml
+                name: app-secrets
                 key: pgpassword
           - name: PGPORT
             valueFrom:
               configMapKeyRef:
-                name: secret.yml
+                name: app-configmap
                 key: pgport
 
           - name: COOKIE_ENCRYPT_PWD
             valueFrom:
               secretKeyRef:
-                name: secret.yml
+                name: app-secrets
                 key: cookie_encrypt
 
           - name: OKTA_ORG_URL
             valueFrom:
               configMapKeyRef:
-                name: secret.yml
+                name: app-configmap
                 key: oktaurl
           - name: OKTA_CLIENT_ID
             valueFrom:
               secretKeyRef:
-                name: secret.yml
+                name: app-secrets
                 key: oktaclient
           - name: OKTA_CLIENT_SECRET
             valueFrom:
               secretKeyRef:
-                name: secret.yml
+                name: app-secrets
                 key: oktasecret
