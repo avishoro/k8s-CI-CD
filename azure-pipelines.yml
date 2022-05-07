@@ -65,7 +65,7 @@ stages:
               namespace: 'default'
               secretType: 'dockerRegistry'
               secretName: 'app-secrets'
-              dockerRegistryEndpoint: 'af00db1e-cd18-44c8-b919-3851613641cc'
+              dockerRegistryEndpoint: '5f80249e-71e0-4bb9-8a6b-ba8d3e229195'
 
           - task: KubernetesManifest@0
             inputs:
