@@ -48,7 +48,7 @@ stages:
   jobs:
   - deployment: Deploy
     displayName: 'Deploy to AKS'
-    environment: 'k8s-production.default'
+    environment: 'k8.default'
     strategy:
       runOnce: 
         deploy:
