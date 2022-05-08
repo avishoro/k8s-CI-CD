@@ -71,7 +71,7 @@ stages:
                     --from-literal=PGDATABASE=$(PG_USER) \
                     --from-literal=PGPASSWORD=$(PG_PASS) \
                     --from-literal=PGPORT=5432
-                 kubernetesServiceConnection: k8
+                 kubernetesServiceConnection: k8-appCluster-default-1651949511896
                  namespace: default
      
           - task: KubernetesManifest@0
