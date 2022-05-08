@@ -3,15 +3,24 @@
 
 ## Azure DevOps
 
-Create an environment and connect it with AKS cluster that created with Terraform.
+Clone the repository.
+Follow these steps before creating the pipeline:
+1. Follow https://kubernetes.io/docs/tasks/tools/ to install `kubectl' on your agent.<br/>
+1. Follow https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-linux?pivots=apt to install Azure CLI on LINUX.<br/>
+1. Follow https://docs.microsoft.com/en-us/cli/azure/authenticate-azure-cli to login to Azure CLI.<br/>
 
-<img src="https://user-images.githubusercontent.com/90269123/142792505-feb6d1c8-2ad7-4a6b-a7a4-cc68c8de9692.png" width="400" height="500" alt="AKS">
 
-Go to `Project settings` and create new service connection for Azure Container Registry that created with Terraform.
 
-<img src="https://user-images.githubusercontent.com/90269123/142786303-641eed67-fe3c-4a4c-8d09-e4d4ce7bc116.png" width="400" height="500" alt="new service connection">
+Create an environment and connect it with AKS cluster.
 
-We now have two service connections one for AKS and another one for ACR:
+
+
+Go to `Project settings` and create new service connection for Azure Container Registry.
+
+Create new variable group in the library with your secrets.
+
+
+
 
 
 
