@@ -69,7 +69,7 @@ stages:
               manifests: |
                 Kubernetes/service.yml
                 Kubernetes/ingress.yml
-                https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml
+                kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml
                 Kubernetes/deployment.yml
               imagePullSecrets: $(imagePullSecret)
               kubernetesServiceConnection: k8-appCluster-default-1651949511896
