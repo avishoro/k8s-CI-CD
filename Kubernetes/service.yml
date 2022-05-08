@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-    name: weightapptracker
+    name: weightapptracker2
 spec:
     ports:
     - port: 80 
     selector:
-        app: weightapptracker
+        app: weightapptracker2
