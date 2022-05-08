@@ -35,12 +35,6 @@ stages:
         repository: $(imageRepository)
         containerRegistry: 'ACR'
         tags: $(tag)
-        
-    - task: PublishPipelineArtifact@1
-      inputs:
-        targetPath: '$(Pipeline.Workspace)/s/Kubernetes'
-        artifact: '$(artifactName)'
-        publishLocation: 'pipeline'
 
 - stage: Deploy
   displayName: Deploy to Production
@@ -53,12 +47,6 @@ stages:
       runOnce: 
         deploy:
           steps:
-          - task: DownloadPipelineArtifact@2
-            inputs:
-              buildType: 'current'
-              artifactName: '$(artifactName)'
-              targetPath: '$(Pipeline.Workspace)/manifests'
-
           
           - task: KubernetesManifest@0
             displayName: Create secret
@@ -76,9 +64,9 @@ stages:
               action: 'deploy'
               namespace: 'default'
               manifests: |
-                $(Pipeline.Workspace)/manifests/deployment.yml
-                $(Pipeline.Workspace)/manifests/ingress.yml
-                $(Pipeline.Workspace)/manifests/service.yml
-                $(Pipeline.Workspace)/manifests/configmap.yml
+                Kubernetes/deployment.yml
+                Kubernetes/ingress.yml
+                Kubernetes/service.yml
+                Kubernetes/configmap.yml
               imagePullSecrets: $(imagePullSecret)
               containers: '$(containerRegistry)/$(imageRepository):$(tag)'
