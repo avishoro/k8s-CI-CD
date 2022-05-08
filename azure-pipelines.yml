@@ -80,6 +80,5 @@ stages:
                 Kubernetes/deployment.yml
                 Kubernetes/ingress.yml
                 Kubernetes/service.yml
-                Kubernetes/configmap.yml
               imagePullSecrets: $(imagePullSecret)
               containers: '$(containerRegistry)/$(imageRepository):$(tag)'
