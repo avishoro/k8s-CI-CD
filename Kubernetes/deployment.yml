@@ -1,4 +1,4 @@
-apiVersion : apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: weightapptracker2
@@ -15,63 +15,15 @@ spec:
       containers:
         - name: weightapptracker2
           image: weightapptracker2.azurecr.io/weightapptracker2:latest
+          envFrom:
+            - secretRef:
+                name: app-secret
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
           ports:
-          - containerPort: 80
-          env:
-          - name: HOST
-            valueFrom:
-              configMapKeyRef:
-                name: app-configmap
-                key: host
-          - name: PORT
-            valueFrom:
-              configMapKeyRef:
-                name: app-configmap
-                key: port
-          - name: PGHOST
-            valueFrom:
-              secretKeyRef:
-                name: app-configmap
-                key: pghost
-          - name: PGUSERNAME
-            valueFrom:
-              secretKeyRef:
-                name: app-configmap
-                key: pgusername
-          - name: PGDATABASE
-            valueFrom:
-              configMapKeyRef:
-                name: app-configmap
-                key: pgdatabase
-          - name: PGPASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: app-configmap
-                key: pgpassword
-          - name: PGPORT
-            valueFrom:
-              configMapKeyRef:
-                name: app-configmap
-                key: pgport
-
-          - name: COOKIE_ENCRYPT_PWD
-            valueFrom:
-              secretKeyRef:
-                name: app-configmap
-                key: cookie_encrypt
-
-          - name: OKTA_ORG_URL
-            valueFrom:
-              configMapKeyRef:
-                name: app-configmap
-                key: oktaurl
-          - name: OKTA_CLIENT_ID
-            valueFrom:
-              secretKeyRef:
-                name: app-configmap
-                key: oktaclient
-          - name: OKTA_CLIENT_SECRET
-            valueFrom:
-              secretKeyRef:
-                name: app-configmap
-                key: oktasecret
+            - containerPort: 80
