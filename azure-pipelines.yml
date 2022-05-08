@@ -71,4 +71,5 @@ stages:
                 Kubernetes/ingress.yml
                 Kubernetes/service.yml
               imagePullSecrets: $(imagePullSecret)
+              kubernetesServiceConnection: k8-appCluster-default-1651949511896
               containers: '$(containerRegistry)/$(imageRepository):$(tag)'
