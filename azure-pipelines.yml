@@ -9,7 +9,7 @@ variables:
   imageRepository: 'weightapptracker2'
   containerRegistry: 'ACR'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
-  tag: '$(Build.BuildId)'
+  tag: 'latest'
   artifactName: 'manifests'
   imagePullSecret: 'superawesomebrilliantsecret-auth'
 
