@@ -13,8 +13,8 @@ spec:
         app: weightapptracker
     spec:
       containers:
-        - name: weightapptracker
-          image: weightapptracker.azurecr.io/weightapptracker
+        - name: weightapptracker2
+          image: weightapptracker2.azurecr.io/weightapptracker
           ports:
           - containerPort: 80
           env:
