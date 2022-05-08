@@ -68,7 +68,6 @@ stages:
                     --from-literal=PGDATABASE=$(PG_USER) \
                     --from-literal=PGPASSWORD=$(PG_PASS) \
                     --from-literal=PGPORT=5432
-            displayName: create env
             
 
           - task: KubernetesManifest@0
