@@ -52,10 +52,13 @@ stages:
             inputs:
               containerRegistry: 'ACR'
               command: 'login'
-          
-          - script: |
-                    kubectl create secret generic app-secret \
-                    --from-literal=PORT=80 \
+          - task: KubernetesManifest@0
+            displayName: Create secret
+            inputs: 
+                 action: createSecret
+                 secretType: generic
+                 secretName: app-secret
+                 secretArguments:  --from-literal=PORT=80 \
                     --from-literal=HOST=0.0.0.0 \
                     --from-literal=COOKIE_ENCRYPT_PWD=$(COOKIE_ENCRYPT_PWD) \
                     --from-literal=NODE_ENV=$(NODE_ENV) \
@@ -68,8 +71,9 @@ stages:
                     --from-literal=PGDATABASE=$(PG_USER) \
                     --from-literal=PGPASSWORD=$(PG_PASS) \
                     --from-literal=PGPORT=5432
-            
-
+                 kubernetesServiceConnection: 'k8.default'
+                 namespace: default
+     
           - task: KubernetesManifest@0
             inputs:
               action: 'deploy'
