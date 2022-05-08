@@ -42,7 +42,7 @@ stages:
   jobs:
   - deployment: Deploy
     displayName: 'Deploy to AKS'
-    environment: 'k8.default'
+    environment: k8
     strategy:
       runOnce: 
         deploy:
@@ -71,7 +71,7 @@ stages:
                     --from-literal=PGDATABASE=$(PG_USER) \
                     --from-literal=PGPASSWORD=$(PG_PASS) \
                     --from-literal=PGPORT=5432
-                 kubernetesServiceConnection: 'k8.default'
+                 kubernetesServiceConnection: k8
                  namespace: default
      
           - task: KubernetesManifest@0
