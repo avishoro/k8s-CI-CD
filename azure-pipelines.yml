@@ -48,6 +48,10 @@ stages:
         deploy:
           steps:
           
+          - task: Docker@2
+            inputs:
+              containerRegistry: 'ACR'
+              command: 'login'
           - task: KubernetesManifest@0
             displayName: Create secret
             inputs: 
