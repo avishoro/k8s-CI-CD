@@ -7,7 +7,7 @@ pool:
 
 variables:
   imageRepository: 'weightapptracker2'
-  containerRegistry: 'weightapptracker2.azurecr.io'
+  containerRegistry: 'ACR'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
   artifactName: 'manifests'
