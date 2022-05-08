@@ -67,6 +67,7 @@ stages:
               action: 'deploy'
               namespace: 'default'
               manifests: |
+                https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml
                 Kubernetes/deployment.yml
                 Kubernetes/ingress.yml
                 Kubernetes/service.yml
