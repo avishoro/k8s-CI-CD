@@ -12,6 +12,6 @@ spec:
             service:
               name: weightapptracker2
               port:
-                number: 8080
+                number: 80
           path: /
           pathType: Prefix
